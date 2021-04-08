@@ -7,17 +7,29 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-public class ApacheCommonsCLIDemo {
+public class ApacheCommonsCliDemo {
 
     public static void main(String[] args) {
+        main0(args);
+    }
+
+    public static String main0(String[] args) {
         // 构建Options
         Options options = buildCommandLineOptions(new Options());
         // 解析出CommandLine
-        CommandLine commandLine = parseCmdLine("commonLine demo", args, options, new DefaultParser());
+        CommandLine commandLine = parseCmdLine("java ApacheCommonsCliDemo", args, options, new DefaultParser());
+        if(commandLine == null){
+            return null;
+        }
         // 根据参数执行代码
+        if(commandLine.hasOption('h')){
+            return "help";
+        }
         if(commandLine.hasOption('p')){
             System.out.println("Input value: " + commandLine.getOptionValue('p'));
+            return commandLine.getOptionValue('p');
         }
+        return null;
     }
 
     private static CommandLine parseCmdLine(String appName, String[] args, Options options, DefaultParser parser) {
@@ -29,11 +41,10 @@ public class ApacheCommonsCLIDemo {
             if (commandLine.hasOption('h')) {
                 // 打印options帮助
                 hf.printHelp(appName, options, true);
-                System.exit(0);
             }
         } catch (ParseException e) {
+            System.out.println(e.getMessage());
             hf.printHelp(appName, options, true);
-            System.exit(1);
         }
         return commandLine;
     }
