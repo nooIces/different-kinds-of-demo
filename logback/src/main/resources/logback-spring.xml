@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<configuration>
+    <appender name="RollingFileAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 写入日志文件名, 可以是相对目录 也可以是绝对目录 -->
+        <file>rolling_file.log</file>
+        <!--
+            日志存入文件位置 默认: true
+            true: 文件追加在文件结尾 false: 清空现存文件
+         -->
+        <append>true</append>
+        <!-- 滚动策略
+                1. TimeBasedRollingPolicy: 根据时间制定滚动策略
+                2. SizeBasedTriggeringPolicy: 根据文件大小的滚动策略
+                3. FixedWindowRollingPolicy: 根据固定窗口算法重命名文件的滚动策略
+         -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>rolling_file.%i.log.gz</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex>
+        </rollingPolicy>
+        <!-- 何时触发滚动 -->
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>1KB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyy-MM-dd HH:mm:ss,GMT+8} %p %t - %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FileAppender_inner"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>normal_file.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>normal_file.%i.log.gz</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>100MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{yyy-MM-dd HH:mm:ss,GMT+8} %p %t - %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FileAppender" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FileAppender_inner"/>
+        <!-- 假如等于20则表示，表示当还剩20%容量时，将丢弃TRACE、DEBUG、INFO级别的Event，只保留WARN与ERROR级别的Event，为了保留所有的events，可以将这个值设置为0 -->
+        <discardingThreshold>0</discardingThreshold>
+    </appender>
+
+    <appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <append>true</append>
+        <!-- 过滤条件
+                1. 通过level等级过滤
+                2. 通过threshold过滤 设置的级别及以上 可显示
+         -->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>-->
+        <!-- -->
+        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>-->
+        <encoder>
+            <pattern>%d{yyy-MM-dd HH:mm:ss,GMT+8} %p %t - %m%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="com.nooices" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="ConsoleAppender"/>
+    </logger>
+
+    <logger name="com.nooices.logback" additivity="true">
+        <level value="WARN"/>
+        <appender-ref ref="ConsoleAppender"/>
+        <appender-ref ref="FileAppender"/>
+        <appender-ref ref="RollingFileAppender"/>
+    </logger>
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="ConsoleAppender"/>
+        <appender-ref ref="RollingFileAppender"/>
+    </root>
+</configuration>
