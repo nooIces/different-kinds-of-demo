@@ -1,5 +1,6 @@
 package com.nooices.apachecommonscli;
 
+import com.nooices.apachecommonscli.demo.ApacheCommonsCliDemo;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
 
