@@ -22,7 +22,7 @@ public class DecompressGZipFile {
         }
     }
 
-    private static String decompressGZipFileToStr(File downloadFile) throws IOException {
+    public static String decompressGZipFileToStr(File downloadFile) throws IOException {
         GZIPInputStream gis = new GZIPInputStream(new FileInputStream(downloadFile));
         Reader reader = new InputStreamReader(gis, StandardCharsets.UTF_8);
         Writer writer = new StringWriter();
