@@ -1,25 +1,26 @@
 package com.example.spring.controller;
 
 import com.example.spring.bean.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @RestController
 @RequestMapping("/prototype")
 @Scope("prototype")
 public class ScopePrototypeController {
 
-    @Autowired
+    @Resource
     @Qualifier("protoTypeUser")
     private User protoTypeUser;
-    @Autowired
+    @Resource
     @Qualifier("protoTypeProxyUser")
     private User protoTypeProxyUser;
-    @Autowired
+    @Resource
     @Qualifier("testA")
     private User notChangeUser;
 

@@ -18,7 +18,7 @@ public class ScopeRequestController {
     private User protoTypeUser;
 
     @RequestMapping("/test")
-    public String test() throws InterruptedException {
+    public String test() {
         return protoTypeUser.getUsername() + "-" + protoTypeUser.getPassword();
     }
 
