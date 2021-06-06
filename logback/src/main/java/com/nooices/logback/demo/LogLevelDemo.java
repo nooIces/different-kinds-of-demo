@@ -1,7 +1,7 @@
 package com.nooices.logback.demo;
 
 import ch.qos.logback.classic.Level;
-import com.nooices.apachecommonscli.util.CmdUtil;
+import com.nooices.logback.util.CmdUtil;
 import com.nooices.logback.util.OptionsUtil;
 import com.nooices.logback.util.PrintLogUtil;
 import org.apache.commons.cli.CommandLine;

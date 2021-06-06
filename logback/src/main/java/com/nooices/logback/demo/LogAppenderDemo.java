@@ -3,7 +3,7 @@ package com.nooices.logback.demo;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.joran.spi.JoranException;
-import com.nooices.apachecommonscli.util.CmdUtil;
+import com.nooices.logback.util.CmdUtil;
 import com.nooices.logback.util.OptionsUtil;
 import com.nooices.logback.util.PrintLogUtil;
 import org.apache.commons.cli.CommandLine;
