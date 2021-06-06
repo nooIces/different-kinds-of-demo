@@ -15,7 +15,7 @@
     <name>demo</name>
     <description>Different Kinds of Demo</description>
 
-    <modules>
+    <modules> 
         <module>algorithm</module>
         <module>apachecommonscli</module>
         <module>logback</module>
